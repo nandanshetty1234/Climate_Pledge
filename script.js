@@ -14,7 +14,7 @@ document.getElementById("pledgeForm").addEventListener("submit", function (e) {
   const starDisplay = "* ".repeat(commitments.length).trim();
 
   document.getElementById("certName").innerText = `Hi ${name},`;
-  document.getElementById("starRating").innerText = starDisplay;
+  document.getElementById("starRating").innerHTML = `<span style="color:gold; font-size:24px; letter-spacing:6px;">${starDisplay}</span>`;
   document.getElementById("certificateSection").style.display = "block";
 
   const table = document.getElementById("pledgeTable");
