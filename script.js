@@ -11,8 +11,10 @@ document.getElementById("pledgeForm").addEventListener("submit", function (e) {
     .filter(cb => cb.checked)
     .map(cb => cb.value);
 
+  const starDisplay = "* ".repeat(commitments.length).trim();
+
   document.getElementById("certName").innerText = `Hi ${name},`;
-  document.getElementById("starRating").innerText = "★".repeat(commitments.length);
+  document.getElementById("starRating").innerText = starDisplay;
   document.getElementById("certificateSection").style.display = "block";
 
   const table = document.getElementById("pledgeTable");
@@ -24,7 +26,7 @@ document.getElementById("pledgeForm").addEventListener("submit", function (e) {
     <td>${now}</td>
     <td>${this.state.value}</td>
     <td>${profile}</td>
-    <td>${"★".repeat(commitments.length)}</td>
+    <td>${starDisplay}</td>
   `;
 
   document.getElementById("pledgeCount").innerText = table.rows.length;
@@ -40,8 +42,6 @@ document.getElementById("pledgeForm").addEventListener("submit", function (e) {
   this.reset();
 });
 
-
-
 document.getElementById("downloadBtn").addEventListener("click", function () {
   const { jsPDF } = window.jspdf;
   const doc = new jsPDF();
@@ -49,10 +49,9 @@ document.getElementById("downloadBtn").addEventListener("click", function () {
   const name = document.getElementById("certName").innerText.replace("Hi ", "").replace(",", "");
   const stars = document.getElementById("starRating").textContent;
 
-
   doc.setLineWidth(1.5);
   doc.setDrawColor(34, 139, 87);
-  doc.rect(10, 10, 190, 277); 
+  doc.rect(10, 10, 190, 277);
 
   doc.setFont("helvetica", "bold");
   doc.setFontSize(22);
@@ -72,7 +71,11 @@ document.getElementById("downloadBtn").addEventListener("click", function () {
   doc.setFontSize(16);
   doc.text("is Cool Enough to Care!", 105, 90, { align: "center" });
 
-  doc.text(`Love for Planet`, 105, 110, { align: "center" });
+  doc.setFont("helvetica", "bold");
+  doc.setFontSize(20);
+  doc.setTextColor(255, 204, 0); // yellow color
+  doc.text(stars, 105, 110, { align: "center" });
 
   doc.save(`${name}_Climate_Pledge_Certificate.pdf`);
 });
+
